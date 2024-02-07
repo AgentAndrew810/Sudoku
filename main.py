@@ -27,8 +27,12 @@ def main() -> None:
 
             elif event.type == pygame.VIDEORESIZE:
                 width, height = event.size
-                min_width = BOARD_SIZE + PADDING * 2 + PANEL_SIZE
+                
+                # get the minimum dimensions
+                min_width = BOARD_SIZE + PADDING * 3 + PANEL_SIZE
                 min_height = BOARD_SIZE + PADDING * 2
+                
+                # adjust the screen and reset the sizes of items in the game class
                 screen = pygame.display.set_mode((max(min_width, width), max(min_height, height)), pygame.RESIZABLE)
                 game.set_sizes((max(min_width, width), max(min_height, height)))
 
