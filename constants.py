@@ -5,7 +5,8 @@ SCREEN_HEIGHT = 600
 # the default padding, board_size, and panel_size
 PADDING = 20
 BOARD_SIZE = 300
-PANEL_SIZE = 200
+PANEL_SIZE = 75
+
 
 
 # colours in rgb
