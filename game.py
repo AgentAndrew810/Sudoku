@@ -1,52 +1,26 @@
 import pygame
 from board import Board
-from constants import BLACK, WHITE, BLUE, YELLOW, PADDING
+from utils.get_sizes import get_sizes
+from constants import BLACK, WHITE, BLUE, YELLOW
 
 
 class Game:
     def __init__(self, screen: pygame.surface.Surface) -> None:
         self.active = True
         self.board = Board()
-        self.set_sizes(screen.get_size())
 
-    def set_sizes(self, size: tuple[int, int]) -> None:
-        # get the full width and height of the screen
-        self.full_width, self.full_height = size
+        sizes = get_sizes(*screen.get_size())
+        self.set_sizes(sizes)
 
-        # set the panel width to 1/6 of the width
-        self.panel_width = 1 / 6 * self.full_width
+    def set_sizes(self, sizes: dict[str, int]) -> None:
+        self.__dict__.update(sizes)
+        self.font = pygame.font.SysFont(None, self.font_size)
 
-        # calculate the available width and height, by removing padding and panel width
-        available_width = self.full_width - PADDING * 3 - self.panel_width
-        available_height = self.full_height - PADDING * 2
+    def x_coord(self, col: int) -> None:
+        return self.x_padd + col * self.cell_size
 
-        # set default values of padding
-        self.x_padd = PADDING
-        self.y_padd = PADDING
-
-        if available_width > available_height:
-            # if the available width is greater than the height, calculate cell_size from height, add more x padd
-            self.cell_size = available_height // 9
-            self.x_padd += (available_width - available_height) // 3
-        else:
-            # if the available height is greater than the width, calculate cell_size from width, add more y padd
-            self.cell_size = available_width // 9
-            self.y_padd += (available_height - available_width) // 2
-
-        # based on the cell_size calculate the fontsize
-        fontsize = int(self.cell_size * 42 / 62)
-        self.font = pygame.font.SysFont(None, fontsize)
-
-        # calculate helper values (not required but simplify code)
-        self.big_cell_size = self.cell_size * 3
-        self.board_size = self.cell_size * 9
-        self.panel_start = self.x_padd + self.board_size + self.x_padd
-
-    def x_coord(self, x):
-        return self.x_padd + x * self.cell_size
-
-    def y_coord(self, y):
-        return self.y_padd + y * self.cell_size
+    def y_coord(self, row: int) -> None:
+        return self.y_padd + row * self.cell_size
 
     def select(self, x: int, y: int) -> None:
         # if the cursor is on the board
@@ -67,7 +41,7 @@ class Game:
         # if a square is highlighted
         if self.board.highlighted:
             row, col = self.board.highlighted
-            
+
             # if that number isn't on the original board
             if self.board.original[row][col] is None:
                 self.board.nums[row][col] = num
@@ -76,13 +50,20 @@ class Game:
         # draw a white background
         screen.fill(WHITE)
 
+        self.panel_start = self.x_padd + self.board_size + self.padd
+        self.panel_width = self.cell_size * 2
+
         # panel border
-        pygame.draw.rect(screen, BLACK, (self.panel_start, self.y_padd, self.panel_width, self.board_size), 5)
+        pygame.draw.rect(
+            screen,
+            BLACK,
+            (self.panel_start, self.y_padd, self.panel_width, self.board_size),
+            self.big_line_size,
+        )
 
         # draw squares and numbers
         for row in range(9):
             for col in range(9):
-
                 # get the colour of the square based on the status
                 if [row, col] == self.board.highlighted:
                     colour = YELLOW
@@ -91,7 +72,16 @@ class Game:
                 else:
                     colour = WHITE
 
-                pygame.draw.rect(screen, colour, (self.x_coord(col), self.y_coord(row), self.cell_size, self.cell_size))
+                pygame.draw.rect(
+                    screen,
+                    colour,
+                    (
+                        self.x_coord(col),
+                        self.y_coord(row),
+                        self.cell_size,
+                        self.cell_size,
+                    ),
+                )
 
                 # get the number on that square
                 number = self.board.nums[row][col]
@@ -100,14 +90,32 @@ class Game:
                 if number:
                     width, height = self.font.size(str(number))
                     font_surf = self.font.render(str(number), True, BLACK)
-                    screen.blit(font_surf, (self.x_coord(col + 0.5) - width // 2, self.y_coord(row + 0.5) - height // 2))
+                    screen.blit(
+                        font_surf,
+                        (
+                            self.x_coord(col + 0.5) - width // 2,
+                            self.y_coord(row + 0.5) - height // 2,
+                        ),
+                    )
 
         # draw inside lines
         for i in range(10):
             # vertical lines
-            pygame.draw.line(screen, BLACK, (self.x_coord(i), self.y_padd), (self.x_coord(i), self.y_padd + self.board_size))
+            pygame.draw.line(
+                screen,
+                BLACK,
+                (self.x_coord(i), self.y_padd),
+                (self.x_coord(i), self.y_padd + self.board_size),
+                self.line_size,
+            )
             # horizontal lines
-            pygame.draw.line(screen, BLACK, (self.x_padd, self.y_coord(i)), (self.x_padd + self.board_size, self.y_coord(i)))
+            pygame.draw.line(
+                screen,
+                BLACK,
+                (self.x_padd, self.y_coord(i)),
+                (self.x_padd + self.board_size, self.y_coord(i)),
+                self.line_size,
+            )
 
         # draw outside lines
         for i in range(4):
@@ -117,7 +125,7 @@ class Game:
                 BLACK,
                 (self.x_padd + self.big_cell_size * i, self.y_padd),
                 (self.x_padd + self.big_cell_size * i, self.y_padd + self.board_size),
-                5,
+                self.big_line_size,
             )
             # horizontal lines
             pygame.draw.line(
@@ -125,5 +133,5 @@ class Game:
                 BLACK,
                 (self.x_padd, self.y_padd + self.big_cell_size * i),
                 (self.x_padd + self.board_size, self.y_padd + self.big_cell_size * i),
-                5,
+                self.big_line_size,
             )
