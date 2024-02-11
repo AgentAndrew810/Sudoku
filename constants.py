@@ -1,13 +1,10 @@
 import pygame
 
-# the default width and height of the window, can still be changed by resizing the window
+# the default width and height of the window, and the minimum width and height
 SCREEN_WIDTH = 800
-SCREEN_HEIGHT = 600
-
-# the default padding, board_size, and panel_size
-PADDING = 20
-BOARD_SIZE = 300
-PANEL_SIZE = 50
+SCREEN_HEIGHT = 640
+MIN_WIDTH = 400
+MIN_HEIGHT = 320
 
 # colours in rgb
 BLACK = (0, 0, 0)
@@ -31,4 +28,9 @@ NUMBERS = {
     pygame.K_DELETE: None,
     pygame.K_BACKSPACE: None,
 }
-ARROWS = {pygame.K_LEFT: "left", pygame.K_RIGHT: "right", pygame.K_UP: "up", pygame.K_DOWN: "down"}
+ARROWS = {
+    pygame.K_LEFT: "left",
+    pygame.K_RIGHT: "right",
+    pygame.K_UP: "up",
+    pygame.K_DOWN: "down",
+}
