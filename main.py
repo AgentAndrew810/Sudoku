@@ -1,7 +1,15 @@
 import pygame
 from menu import Menu
 from game import Game
-from constants import SCREEN_WIDTH, SCREEN_HEIGHT, BOARD_SIZE, PANEL_SIZE, PADDING, ARROWS, NUMBERS
+from utils.get_sizes import get_sizes
+from constants import (
+    SCREEN_WIDTH,
+    SCREEN_HEIGHT,
+    MIN_WIDTH,
+    MIN_HEIGHT,
+    ARROWS,
+    NUMBERS,
+)
 
 # pygame setup
 pygame.init()
@@ -28,13 +36,12 @@ def main() -> None:
             elif event.type == pygame.VIDEORESIZE:
                 width, height = event.size
 
-                # get the minimum dimensions
-                min_width = BOARD_SIZE + PADDING * 3 + PANEL_SIZE
-                min_height = BOARD_SIZE + PADDING * 2
+                width = max(width, MIN_WIDTH)
+                height = max(height, MIN_HEIGHT)
 
                 # adjust the screen and reset the sizes of items in the game class
-                screen = pygame.display.set_mode((max(min_width, width), max(min_height, height)), pygame.RESIZABLE)
-                game.set_sizes((max(min_width, width), max(min_height, height)))
+                screen = pygame.display.set_mode((width, height), pygame.RESIZABLE)
+                game.set_sizes(get_sizes(width, height))
 
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 game.select(*event.pos)
