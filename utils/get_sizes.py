@@ -11,7 +11,6 @@ def get_sizes(screen_width: int, screen_height: int) -> dict[str:int]:
     # use the height and width to calculate other sizes
     padd = round(width / 25)
     cell_size = padd * 2
-    big_cell_size = cell_size * 3
     board_size = cell_size * 9
     font = round(cell_size * 0.8)
     line_size = max(1, round(cell_size / 64))
@@ -23,7 +22,6 @@ def get_sizes(screen_width: int, screen_height: int) -> dict[str:int]:
 
     return {
         "cell_size": cell_size,
-        "big_cell_size": big_cell_size,
         "board_size": board_size,
         "x_padd": x_padd,
         "y_padd": y_padd,
