@@ -100,13 +100,15 @@ class Game:
 
         # draw inside lines
         for i in range(10):
+            line_width = self.big_line_size if i % 3 == 0 else self.line_size
+
             # vertical lines
             pygame.draw.line(
                 screen,
                 BLACK,
                 (self.get_x(i), self.y_padd),
                 (self.get_x(i), self.y_padd + self.board_size),
-                self.line_size,
+                line_width,
             )
             # horizontal lines
             pygame.draw.line(
@@ -114,24 +116,5 @@ class Game:
                 BLACK,
                 (self.x_padd, self.get_y(i)),
                 (self.x_padd + self.board_size, self.get_y(i)),
-                self.line_size,
-            )
-
-        # draw outside lines
-        for i in range(4):
-            # vertical lines
-            pygame.draw.line(
-                screen,
-                BLACK,
-                (self.get_x(i * 3), self.y_padd),
-                (self.get_x(i * 3), self.y_padd + self.board_size),
-                self.big_line_size,
-            )
-            # horizontal lines
-            pygame.draw.line(
-                screen,
-                BLACK,
-                (self.x_padd, self.get_y(i * 3)),
-                (self.x_padd + self.board_size, self.get_y(i * 3)),
-                self.big_line_size,
+                line_width,
             )
