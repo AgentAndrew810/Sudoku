@@ -31,8 +31,8 @@ class Game:
             and y <= self.y_padd + self.board_size
         ):
             # find the row and col
-            row = int((y - self.y_padd) // self.cell_size)
-            col = int((x - self.x_padd) // self.cell_size)
+            row = (y - self.y_padd) // self.cell_size
+            col = (x - self.x_padd) // self.cell_size
 
             # highlight that square
             self.board.highlighted = [row, col]
