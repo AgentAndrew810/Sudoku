@@ -1,5 +1,4 @@
 import pygame
-from menu import Menu
 from game import Game
 from utils.get_sizes import get_sizes
 from constants import (
@@ -23,7 +22,6 @@ def main() -> None:
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.RESIZABLE)
 
     # setup objects
-    menu = Menu()
     game = Game(screen)
 
     while game.active:
