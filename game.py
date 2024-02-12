@@ -123,15 +123,15 @@ class Game:
             pygame.draw.line(
                 screen,
                 BLACK,
-                (self.x_padd + self.big_cell_size * i, self.y_padd),
-                (self.x_padd + self.big_cell_size * i, self.y_padd + self.board_size),
+                (self.x_coord(i * 3), self.y_padd),
+                (self.x_coord(i * 3), self.y_padd + self.board_size),
                 self.big_line_size,
             )
             # horizontal lines
             pygame.draw.line(
                 screen,
                 BLACK,
-                (self.x_padd, self.y_padd + self.big_cell_size * i),
-                (self.x_padd + self.board_size, self.y_padd + self.big_cell_size * i),
+                (self.x_padd, self.y_coord(i * 3)),
+                (self.x_padd + self.board_size, self.y_coord(i * 3)),
                 self.big_line_size,
             )
