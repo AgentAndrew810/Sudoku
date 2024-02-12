@@ -16,10 +16,10 @@ class Game:
         self.__dict__.update(sizes)
         self.font = pygame.font.SysFont(None, self.font_size)
 
-    def x_coord(self, col: int) -> None:
+    def get_x(self, col: int) -> None:
         return self.x_padd + col * self.cell_size
 
-    def y_coord(self, row: int) -> None:
+    def get_y(self, row: int) -> None:
         return self.y_padd + row * self.cell_size
 
     def select(self, x: int, y: int) -> None:
@@ -76,8 +76,8 @@ class Game:
                     screen,
                     colour,
                     (
-                        self.x_coord(col),
-                        self.y_coord(row),
+                        self.get_x(col),
+                        self.get_y(row),
                         self.cell_size,
                         self.cell_size,
                     ),
@@ -93,8 +93,8 @@ class Game:
                     screen.blit(
                         font_surf,
                         (
-                            self.x_coord(col + 0.5) - width // 2,
-                            self.y_coord(row + 0.5) - height // 2,
+                            self.get_x(col + 0.5) - width // 2,
+                            self.get_y(row + 0.5) - height // 2,
                         ),
                     )
 
@@ -104,16 +104,16 @@ class Game:
             pygame.draw.line(
                 screen,
                 BLACK,
-                (self.x_coord(i), self.y_padd),
-                (self.x_coord(i), self.y_padd + self.board_size),
+                (self.get_x(i), self.y_padd),
+                (self.get_x(i), self.y_padd + self.board_size),
                 self.line_size,
             )
             # horizontal lines
             pygame.draw.line(
                 screen,
                 BLACK,
-                (self.x_padd, self.y_coord(i)),
-                (self.x_padd + self.board_size, self.y_coord(i)),
+                (self.x_padd, self.get_y(i)),
+                (self.x_padd + self.board_size, self.get_y(i)),
                 self.line_size,
             )
 
@@ -123,15 +123,15 @@ class Game:
             pygame.draw.line(
                 screen,
                 BLACK,
-                (self.x_coord(i * 3), self.y_padd),
-                (self.x_coord(i * 3), self.y_padd + self.board_size),
+                (self.get_x(i * 3), self.y_padd),
+                (self.get_x(i * 3), self.y_padd + self.board_size),
                 self.big_line_size,
             )
             # horizontal lines
             pygame.draw.line(
                 screen,
                 BLACK,
-                (self.x_padd, self.y_coord(i * 3)),
-                (self.x_padd + self.board_size, self.y_coord(i * 3)),
+                (self.x_padd, self.get_y(i * 3)),
+                (self.x_padd + self.board_size, self.get_y(i * 3)),
                 self.big_line_size,
             )
