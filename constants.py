@@ -8,10 +8,10 @@ MIN_HEIGHT = 320
 
 # colours in rgb
 BLACK = (0, 0, 0)
-WHITE = (235, 235, 255)
+WHITE = (255, 255, 255)
 BLUE = (200, 200, 255)
 RED = (255, 150, 150)
-YELLOW = (255, 255, 200)
+YELLOW = (255, 255, 175)
 GREEN = (150, 255, 150)
 
 # pygame keys
