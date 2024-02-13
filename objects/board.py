@@ -24,8 +24,8 @@ class Board:
     def is_over(self, x: int, y: int) -> bool:
         if (
             x >= self.x_padd
-            and x <= self.x_padd + self.board_size
             and y >= self.y_padd
+            and x <= self.x_padd + self.board_size
             and y <= self.y_padd + self.board_size
         ):
             return True
