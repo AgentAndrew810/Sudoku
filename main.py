@@ -1,14 +1,7 @@
 import pygame
 from game import Game
 from utils.get_sizes import get_sizes
-from constants import (
-    SCREEN_WIDTH,
-    SCREEN_HEIGHT,
-    MIN_WIDTH,
-    MIN_HEIGHT,
-    ARROWS,
-    NUMBERS,
-)
+from constants import SCREEN_WIDTH, SCREEN_HEIGHT, MIN_WIDTH, MIN_HEIGHT
 
 # pygame setup
 pygame.init()
@@ -20,8 +13,6 @@ pygame.display.set_caption("Sudoku")
 
 def main() -> None:
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.RESIZABLE)
-
-    # setup objects
     game = Game(screen)
 
     while game.active:
@@ -34,6 +25,7 @@ def main() -> None:
             elif event.type == pygame.VIDEORESIZE:
                 width, height = event.size
 
+                # choose the bigger option
                 width = max(width, MIN_WIDTH)
                 height = max(height, MIN_HEIGHT)
 
@@ -42,17 +34,12 @@ def main() -> None:
                 game.set_sizes(get_sizes(width, height))
 
             elif event.type == pygame.MOUSEBUTTONDOWN:
-                game.select(*event.pos)
+                game.click(*event.pos)
 
             elif event.type == pygame.KEYDOWN:
-                for arrow in ARROWS:
-                    if event.key == arrow:
-                        game.board.move_highlight(ARROWS[arrow])
+                game.press_key(event.key)
 
-                for num in NUMBERS:
-                    if event.key == num:
-                        game.switch(NUMBERS[num])
-
+        # update the screen
         game.draw(screen)
         pygame.display.flip()
 
