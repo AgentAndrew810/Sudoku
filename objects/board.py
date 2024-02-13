@@ -12,6 +12,7 @@ class Board:
 
     def set_sizes(self, sizes: dict[str, int]) -> None:
         self.__dict__.update(sizes)
+
         self.font = pygame.font.SysFont(None, self.font_size)
 
     def get_x(self, col: int) -> None:
@@ -20,21 +21,36 @@ class Board:
     def get_y(self, row: int) -> None:
         return self.y_padd + row * self.cell_size
 
+    def is_over(self, x: int, y: int) -> bool:
+        if (
+            x >= self.x_padd
+            and x <= self.x_padd + self.board_size
+            and y >= self.y_padd
+            and y <= self.y_padd + self.board_size
+        ):
+            return True
+        else:
+            return False
+
+    def select(self, x: int, y: int) -> None:
+        # find the row and col
+        row = (y - self.y_padd) // self.cell_size
+        col = (x - self.x_padd) // self.cell_size
+
+        # select that square
+        self.highlighted = [row, col]
+
     def move(self, direction: str) -> None:
         # move the highlighted square based on the direction
         if self.highlighted:
-            if direction == "left":
-                if not self.highlighted[1] == 0:
-                    self.highlighted[1] -= 1
-            elif direction == "right":
-                if not self.highlighted[1] == 8:
-                    self.highlighted[1] += 1
-            elif direction == "up":
-                if not self.highlighted[0] == 0:
-                    self.highlighted[0] -= 1
-            elif direction == "down":
-                if not self.highlighted[0] == 8:
-                    self.highlighted[0] += 1
+            if direction == "left" and not self.highlighted[1] == 0:
+                self.highlighted[1] -= 1
+            elif direction == "right" and not self.highlighted[1] == 8:
+                self.highlighted[1] += 1
+            elif direction == "up" and not self.highlighted[0] == 0:
+                self.highlighted[0] -= 1
+            elif direction == "down" and not self.highlighted[0] == 8:
+                self.highlighted[0] += 1
 
     def edit(self, number: int) -> None:
         if self.highlighted:
