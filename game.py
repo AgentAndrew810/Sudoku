@@ -98,7 +98,7 @@ class Game:
                         ),
                     )
 
-        # draw inside lines
+        # draw lines
         for i in range(10):
             line_width = self.big_line_size if i % 3 == 0 else self.line_size
 
