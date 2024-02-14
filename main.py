@@ -29,9 +29,13 @@ def main() -> None:
                 width = max(width, MIN_WIDTH)
                 height = max(height, MIN_HEIGHT)
 
-                # adjust the screen and reset the sizes of items in the game class
+                # adjust the screen
                 screen = pygame.display.set_mode((width, height), pygame.RESIZABLE)
-                game.set_sizes(get_sizes(width, height))
+
+                # reset the sizes in the objects
+                sizes = get_sizes(width, height)
+                game.board.set_sizes(sizes)
+                game.panel.set_sizes(sizes)
 
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 game.click(*event.pos)
