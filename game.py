@@ -16,7 +16,7 @@ class Game:
 
     def set_sizes(self, sizes: dict[str, int]) -> None:
         self.__dict__.update(sizes)
-        
+
         self.board.set_sizes(sizes)
         self.panel.set_sizes(sizes)
 
@@ -24,14 +24,12 @@ class Game:
         if self.board.is_over(x, y):
             self.board.select(x, y)
 
-    def press_key(self, key: int) -> None:
-        for arrow in ARROWS:
-            if key == arrow:
-                self.board.move(ARROWS[arrow])
+    def press_key(self, key: int) -> None:             
+        if key in ARROWS:
+            self.board.move(ARROWS[key])
 
-        for number in NUMBERS:
-            if key == number:
-                self.board.edit(NUMBERS[number])
+        if key in NUMBERS:
+            self.board.edit(NUMBERS[key])
 
     def draw(self, screen: pygame.surface.Surface) -> None:
         # draw a white background
