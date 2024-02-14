@@ -8,7 +8,7 @@ class Board:
         self.original = Sudoku(3).difficulty(difficulty).board
         self.nums = [row.copy() for row in self.original]
         self.status = [[None for _ in range(9)] for _ in range(9)]
-        self.selected = None
+        self.selected = (None, None)
 
     def set_sizes(self, sizes: dict[str, int]) -> None:
         self.__dict__.update(sizes)
@@ -38,19 +38,24 @@ class Board:
         col = (x - self.x_padd) // self.cell_size
 
         # select that square
-        self.selected = [row, col]
+        self.selected = (row, col)
 
     def move(self, direction: str) -> None:
-        # move the selected square based on the direction
+
         if self.selected:
-            if direction == "left" and not self.selected[1] == 0:
-                self.selected[1] -= 1
-            elif direction == "right" and not self.selected[1] == 8:
-                self.selected[1] += 1
-            elif direction == "up" and not self.selected[0] == 0:
-                self.selected[0] -= 1
-            elif direction == "down" and not self.selected[0] == 8:
-                self.selected[0] += 1
+            row, col = self.selected
+            
+            # move the selected square based on the direction
+            if direction == "left":
+                col = max(0, col - 1)
+            elif direction == "right":
+                col = min(8, col + 1)
+            elif direction == "up":
+                row = max(0, row - 1)
+            elif direction == "down":
+                row = min(8, row + 1)
+
+        self.selected = (row, col)
 
     def edit(self, number: int) -> None:
         if self.selected:
@@ -65,7 +70,7 @@ class Board:
         for row in range(9):
             for col in range(9):
                 # get the colour of the square based on the status
-                if [row, col] == self.selected:
+                if (row, col) == self.selected:
                     colour = YELLOW
                 elif self.original[row][col]:
                     colour = BLUE
