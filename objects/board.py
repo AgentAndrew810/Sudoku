@@ -1,14 +1,18 @@
 import pygame
+from utils.get_sizes import get_sizes
 from sudoku import Sudoku
 from constants import WHITE, YELLOW, BLUE, BLACK
 
 
 class Board:
-    def __init__(self, difficulty=0.5) -> None:
+    def __init__(self, screen: pygame.surface.Surface, difficulty=0.5) -> None:
         self.original = Sudoku(3).difficulty(difficulty).board
         self.nums = [row.copy() for row in self.original]
         self.status = [[None for _ in range(9)] for _ in range(9)]
         self.selected = (None, None)
+        
+        sizes = get_sizes(*screen.get_size())
+        self.set_sizes(sizes)
 
     def set_sizes(self, sizes: dict[str, int]) -> None:
         self.__dict__.update(sizes)
@@ -41,10 +45,9 @@ class Board:
         self.selected = (row, col)
 
     def move(self, direction: str) -> None:
-
         if self.selected:
             row, col = self.selected
-            
+
             # move the selected square based on the direction
             if direction == "left":
                 col = max(0, col - 1)
