@@ -15,7 +15,10 @@ class Game:
             self.board.select(x, y)
 
         if self.panel.is_over(x, y):
-            self.panel.select(x, y)
+            button_pressed = self.panel.select(x, y)
+            
+            if button_pressed == "solve":
+                pass
 
     def press_key(self, key: int) -> None:
         if key in ARROWS:
