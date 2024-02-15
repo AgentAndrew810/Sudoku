@@ -1,17 +1,15 @@
 import pygame
-from utils.get_sizes import get_sizes
 from sudoku import Sudoku
 from constants import WHITE, YELLOW, BLUE, BLACK
 
 
 class Board:
-    def __init__(self, screen: pygame.surface.Surface, difficulty=0.5) -> None:
+    def __init__(self, sizes: dict[str:int], difficulty=0.5) -> None:
         self.original = Sudoku(3).difficulty(difficulty).board
         self.nums = [row.copy() for row in self.original]
         self.status = [[None for _ in range(9)] for _ in range(9)]
         self.selected = (None, None)
-        
-        sizes = get_sizes(*screen.get_size())
+
         self.set_sizes(sizes)
 
     def set_sizes(self, sizes: dict[str, int]) -> None:
