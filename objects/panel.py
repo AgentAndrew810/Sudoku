@@ -1,25 +1,28 @@
 import pygame
 from objects.button import Button
-from utils.get_sizes import get_sizes
+from objects.clock import Clock
 from constants import BLACK, BLUE
 
 
 class Panel:
-    def __init__(self, screen: pygame.surface.Surface) -> None:
-        sizes = get_sizes(*screen.get_size())
+    def __init__(self, sizes: dict[str:int]) -> None:
         self.set_sizes(sizes)
-
-        self.buttons = {
-            "solve": Button(self.x, self.y, self.width, self.height // 3, BLUE)
-        }
 
     def set_sizes(self, sizes: dict[str, int]) -> None:
         self.__dict__.update(sizes)
-
+        
         self.x = self.x_padd + self.board_size + self.padd
         self.y = self.y_padd
         self.width = self.cell_size * 2
         self.height = self.board_size
+
+        self.clock = Clock(self.x, self.y, self.width, self.height // 3, sizes)
+
+        self.buttons = {
+            "solve": Button(
+                self.x, self.y + self.height // 3, self.width, self.height // 3, BLUE
+            )
+        }
 
     def select(self, x: int, y: int) -> str | None:
         for name, button in self.buttons.items():
@@ -40,6 +43,8 @@ class Panel:
     def draw(self, screen: pygame.surface.Surface) -> None:
         for button in self.buttons.values():
             button.draw(screen)
+            
+        self.clock.draw(screen)
 
         pygame.draw.rect(
             screen,
