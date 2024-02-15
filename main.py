@@ -34,8 +34,7 @@ def main() -> None:
 
                 # reset the sizes in the objects
                 sizes = get_sizes(width, height)
-                game.board.set_sizes(sizes)
-                game.panel.set_sizes(sizes)
+                game.set_sizes(sizes)
 
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 game.click(*event.pos)
