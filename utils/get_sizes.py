@@ -19,7 +19,6 @@ def get_sizes(screen_width: int, screen_height: int) -> dict[str:int]:
     # calculate the x_padd and y_padd based on if the height or width was adjusted
     x_padd = padd + (screen_width - width) // 2
     y_padd = padd + (screen_height - height) // 2
-    
 
     return {
         "cell_size": cell_size,
