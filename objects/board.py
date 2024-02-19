@@ -1,21 +1,16 @@
 import pygame
 from sudoku import Sudoku
+from objects.object import Object
 from constants import WHITE, YELLOW, BLUE, BLACK
 
 
-class Board:
-    def __init__(self, sizes: dict[str:int], difficulty=0.5) -> None:
+class Board(Object):
+    def __init__(self, difficulty=0.5) -> None:
+        super().__init__()
         self.original = Sudoku(3).difficulty(difficulty).board
         self.nums = [row.copy() for row in self.original]
         self.status = [[None for _ in range(9)] for _ in range(9)]
         self.selected = (None, None)
-
-        self.set_sizes(sizes)
-
-    def set_sizes(self, sizes: dict[str, int]) -> None:
-        self.__dict__.update(sizes)
-
-        self.font = pygame.font.SysFont(None, self.font_size)
 
     def get_x(self, col: int) -> None:
         return self.x_padd + col * self.cell_size
@@ -81,12 +76,7 @@ class Board:
                 pygame.draw.rect(
                     screen,
                     colour,
-                    (
-                        self.get_x(col),
-                        self.get_y(row),
-                        self.cell_size,
-                        self.cell_size,
-                    ),
+                    (self.get_x(col), self.get_y(row), self.cell_size, self.cell_size),
                 )
 
                 # get the number on that square
