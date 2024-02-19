@@ -18,24 +18,19 @@ class Board(Object):
     def get_y(self, row: int) -> None:
         return self.y_padd + row * self.cell_size
 
-    def is_over(self, x: int, y: int) -> bool:
+    def select(self, x: int, y: int) -> None:
         if (
             x >= self.x_padd
             and y >= self.y_padd
             and x <= self.x_padd + self.board_size
             and y <= self.y_padd + self.board_size
         ):
-            return True
-        else:
-            return False
+            # find the row and col
+            row = (y - self.y_padd) // self.cell_size
+            col = (x - self.x_padd) // self.cell_size
 
-    def select(self, x: int, y: int) -> None:
-        # find the row and col
-        row = (y - self.y_padd) // self.cell_size
-        col = (x - self.x_padd) // self.cell_size
-
-        # select that square
-        self.selected = (row, col)
+            # select that square
+            self.selected = (row, col)
 
     def move(self, direction: str) -> None:
         if self.selected:
