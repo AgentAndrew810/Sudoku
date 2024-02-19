@@ -1,11 +1,11 @@
 import pygame
 from game import Game
 from utils.get_sizes import get_sizes
+from objects.object import Object
 from constants import SCREEN_WIDTH, SCREEN_HEIGHT, MIN_WIDTH, MIN_HEIGHT
 
 # pygame setup
 pygame.init()
-clock = pygame.time.Clock()
 
 # change title and icon of window
 pygame.display.set_caption("Sudoku")
@@ -13,7 +13,8 @@ pygame.display.set_caption("Sudoku")
 
 def main() -> None:
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.RESIZABLE)
-    game = Game(screen)
+    Object.set_sizes(get_sizes(SCREEN_WIDTH, SCREEN_HEIGHT))
+    game = Game()
 
     while game.active:
         for event in pygame.event.get():
@@ -29,12 +30,9 @@ def main() -> None:
                 width = max(width, MIN_WIDTH)
                 height = max(height, MIN_HEIGHT)
 
-                # adjust the screen
+                # adjust the screen and reset the sizes in the objects
                 screen = pygame.display.set_mode((width, height), pygame.RESIZABLE)
-
-                # reset the sizes in the objects
-                sizes = get_sizes(width, height)
-                game.set_sizes(sizes)
+                Object.set_sizes(get_sizes(width, height))
 
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 game.click(*event.pos)
