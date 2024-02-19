@@ -12,14 +12,11 @@ class Game:
         self.panel = Panel()
 
     def click(self, x: int, y: int) -> None:
-        if self.board.is_over(x, y):
-            self.board.select(x, y)
+        self.board.select(x, y)
 
-        if self.panel.is_over(x, y):
-            button_pressed = self.panel.select(x, y)
-
-            if button_pressed == "solve":
-                pass
+        button_pressed = self.panel.select(x, y)
+        if button_pressed == "solve":
+            pass
 
     def press_key(self, key: int) -> None:
         if key in ARROWS:
