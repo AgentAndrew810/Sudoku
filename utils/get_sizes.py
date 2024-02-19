@@ -14,7 +14,7 @@ def get_sizes(screen_width: int, screen_height: int) -> dict[str:int]:
     board_size = cell_size * 9
     font_size = round(cell_size * 0.8)
     line_size = max(1, round(cell_size / 64))
-    big_line_size = line_size * 4
+    big_line_size = line_size * 3
 
     # calculate the x_padd and y_padd based on if the height or width was adjusted
     x_padd = padd + (screen_width - width) // 2
