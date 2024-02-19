@@ -19,6 +19,7 @@ class Object:
 
         cls.font = pygame.font.SysFont(None, sizes["font_size"])
 
+        # if instance has an update method call it
         for instance in cls.instances:
             if hasattr(instance, "update"):
                 instance.update()
