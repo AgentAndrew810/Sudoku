@@ -1,27 +1,27 @@
 import pygame
 import time
+from objects.object import Object
 from constants import BLACK
 
 
-class Clock:
-    def __init__(
-        self, x: int, y: int, width: int, height: int, sizes: dict[str, int]
-    ) -> None:
+class Clock(Object):
+    def __init__(self, x: int, y: int, width: int, height: int) -> None:
+        super().__init__()
         self.x = x
         self.y = y
         self.width = width
         self.height = height
 
         self.initial_time = time.time()
-        self.set_sizes(sizes)
 
-    def set_sizes(self, sizes: dict[str, int]) -> None:
-        self.__dict__.update(sizes)
-
-        self.font = pygame.font.SysFont(None, self.font_size)
+    def change_position(self, x: int, y: int, width: int, height: int) -> None:
+        self.x = x
+        self.y = y
+        self.width = width
+        self.height = height
 
     def draw(self, screen: pygame.surface.Surface) -> None:
-        seconds = round(time.time()-self.initial_time)
+        seconds = round(time.time() - self.initial_time)
         minutes, seconds = divmod(seconds, 60)
 
         displayed_time = f"{minutes:02d}:{seconds:02d}"
