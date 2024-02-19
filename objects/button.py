@@ -1,10 +1,12 @@
 import pygame
+from objects.object import Object
 
 
-class Button:
+class Button(Object):
     def __init__(
         self, x: int, y: int, width: int, height: int, colour: tuple[int, int, int]
     ) -> None:
+        super().__init__()
         self.x = x
         self.y = y
         self.width = width
@@ -18,7 +20,7 @@ class Button:
 
         return (r * 0.8, g * 0.8, b * 0.8)
 
-    def is_over(self, x: int, y: int) -> bool:        
+    def is_over(self, x: int, y: int) -> bool:
         if (
             x >= self.x
             and y >= self.y
@@ -35,5 +37,5 @@ class Button:
             colour = self.darken()
         else:
             colour = self.colour
-        
+
         pygame.draw.rect(screen, colour, (self.x, self.y, self.width, self.height))
