@@ -1,6 +1,6 @@
 # Sudoku
 
-A Python-based Sudoku game developed as a final project for CS40S. This project allows users to play Sudoku puzzles, get hints, and visualize a Sudoku solving algorithm. It's built using the pygame library in python.
+A Python-based Sudoku game developed as a final project for CS40S (Discontinued In Replace For Chess Engine). This project allows users to play Sudoku puzzles, get hints, and visualize a Sudoku solving algorithm. It's built using the pygame library in python.
 
 ## Getting Started
 
